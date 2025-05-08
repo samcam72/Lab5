@@ -1,0 +1,47 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class MainApp {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<User> users = new ArrayList<>();
+
+        System.out.println("Welcome to the User Input Validation System.");
+
+        while (true) {
+            try {
+                System.out.print("Enter name: ");
+                String name = UserInputValidator.validateName(scanner.nextLine());
+
+                System.out.print("Enter age: ");
+                int age = UserInputValidator.validateAge(scanner.nextLine());
+
+                System.out.print("Enter email: ");
+                String email = UserInputValidator.validateEmail(scanner.nextLine());
+
+                System.out.print("Enter phone (10 digits): ");
+                String phone = UserInputValidator.validatePhone(scanner.nextLine());
+
+                users.add(new User(name, age, email, phone));
+                System.out.println("User added successfully!");
+
+                System.out.print("Add another user? (yes/no): ");
+                String answer = scanner.nextLine().trim().toLowerCase();
+                if (!answer.equals("yes")) {
+                    break;
+                }
+
+            } catch (InvalidInputException e) {
+                System.out.println("x " + e.getMessage());
+            }
+        }
+
+        // Print all collected users
+        System.out.println("All Users Collected:");
+        for (User u : users) {
+            System.out.println("- " + u);
+        }
+
+        scanner.close();
+    }
+}
